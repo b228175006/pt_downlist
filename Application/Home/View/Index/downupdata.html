@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>订单查询</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>			
+ 	<include file="Public/menu" />
+
+	<div class="container">
+		<div class="panel panel-info">
+		  <div class="panel-heading">订单信息</div>
+		  <div class="panel-body">
+		  <div class="table-responsive">
+		    <table class="table table-bordered">
+		      <tr>
+		      	<th>订单编号</th>
+		      	<th>收件人</th>
+		      	<th>联系电话</th>
+		      	<th>收件地址</th>
+		      	<th>货号</th>
+		      	<th>尺码</th>
+		      	<th>颜色</th>
+		      	<th>平台是否受理</th>
+		      	<th>运单号</th>
+		      	<th>下单时间</th>
+		      </tr>
+			  <foreach name="result" item="v">
+			  	<tr>
+			  		<td>{$v.id}</td>
+			  		<td>{$v.u_sj}</td>
+			  		<td>{$v.u_tel}</td>
+			  		<td>{$v.u_address}</td>
+			  		<td>{$v.u_num}</td>
+			  		<td>{$v.u_size}</td>
+			  		<td>{$v.u_color}</td>
+			  		<td>
+						<if condition="($v['mid'] eq 1 )"> 
+						  <span class="glyphicon glyphicon-ok"></span>
+						  <a href="{:U('/Home/Index/addpingtai',array('id'=>$v['id'],'mid'=>'0'))}" class="btn btn-danger">撤销提交</a>
+						<else/>
+						  <span class="glyphicon glyphicon-remove">
+						  <a href="{:U('/Home/Index/addpingtai',array('id'=>$v['id'],'mid'=>'1'))}" class="btn btn-success">提交厂家</a>
+						</if>
+
+			  		</td>
+			  		<td>
+				  		<if condition="($v['num'] eq 0 )"> 
+				  			<form action="{:U('/Home/Index/addyundan')}">
+			  					<input type="text" name="num" id="num">
+			  					<input type="hidden" name="id" value="{$v.id}">
+			  					<input type="submit" value="发货" class="btn btn-info">
+				  			</form>
+				  		<else/>
+							{$v.num}
+				  		</if>
+			  		</td>
+			  		<td>{$v.addtime|date="Y-m-d h:i",###}</td>
+			  	</tr>
+			  </foreach>
+		    </table>
+		   </div>
+		  </div>
+		</div>
+	</div>
+
+	<include file="Public/footer" />
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  </body>
+</html>

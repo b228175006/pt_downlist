@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>订单查询</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>			
+ 	<include file="Public/menu" />
+
+	<div class="container">
+		<div class="panel panel-info">
+		  <div class="panel-heading">客户信息</div>
+		  <div class="panel-body">
+		  <div class="table-responsive">
+		    <table class="table table-bordered text-center">
+		      <tr>
+		      	<th>用户名</th>
+		      	<th>昵称</th>
+		      	<th>联系电话</th>
+		      	<th>下单权限</th>
+		      	<th>操作</th>
+		      </tr>
+			  <foreach name="result" item="v">
+			  	<tr>
+			  		<td>{$v.username}</td>
+			  		<td>{$v.nikename}</td>
+			  		<td>{$v.tel}</td>
+			  		
+						<if condition="($v['isdown'] eq 1 )"> 
+						  <td><span class="glyphicon glyphicon-ok"></span></td>
+						 <td> <a href="{:U('/Home/Login/addisdown',array('id'=>$v['id'],'isdown'=>'0'))}" class="btn btn-danger">撤销权限</a></td>
+						<else/>
+						  <td><span class="glyphicon glyphicon-remove"></td>
+						  <td><a href="{:U('/Home/Login/addisdown',array('id'=>$v['id'],'isdown'=>'1'))}" class="btn btn-success">给予权限</a></td>
+						</if>
+
+			  		
+			  	</tr>
+			  </foreach>
+		    </table>
+		   </div>
+		  </div>
+		</div>
+	</div>
+
+	<include file="Public/footer" />
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  </body>
+</html>
